@@ -31,11 +31,20 @@ async function run() {
     await client.connect();
 
     const blogCollection = client.db(`ZenZepblog`).collection(`blogs`);
+    const testimonialCollection = client.db(`ZenZepblog`).collection(`testimonial`);
 
     app.get("/blogss", async (req, res) => {
       const cursor = blogCollection.find();
       const result = await cursor.toArray();
-      console.log(result);
+      // console.log(result);
+      res.send(result);
+    });
+    
+    
+    app.get("/testimonials", async (req, res) => {
+      const cursor = testimonialCollection.find();
+      const result = await cursor.toArray();
+      // console.log(result);
       res.send(result);
     });
 
