@@ -31,6 +31,7 @@ async function run() {
     // await client.connect();
 
     const blogCollection = client.db(`ZenZepblog`).collection(`blogs`);
+    const commentCollection = client.db(`ZenZepblog`).collection(`comments`);
     const testimonialCollection = client
       .db(`ZenZepblog`)
       .collection(`testimonial`);
@@ -53,6 +54,30 @@ async function run() {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
       const result = await blogCollection.findOne(query);
+      res.send(result);
+    });
+
+    app.get("/comments", async (req, res) => {
+      const cursor = commentCollection.find();
+      const result = await cursor.toArray();
+      // console.log(result);
+      res.send(result);
+    });
+
+
+    // getting the specific comment in different posts
+    app.get(`/comments/:blogId`, async (req, res) => {
+      const blogId = req.params.blogId;
+      const query = { blogId: blogId };
+      const cursor = commentCollection.find(query);
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+
+    app.post(`/comments`, async (req, res) => {
+      const newComment = req.body;
+      // console.log(newComment);
+      const result = await commentCollection.insertOne(newComment);
       res.send(result);
     });
 
