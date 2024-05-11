@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 require("dotenv").config();
 const port = process.env.PORT || 5000;
 
@@ -9,7 +9,7 @@ const app = express();
 // middleware
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173", "https://blog-website-aef2b.web.app"],
   })
 );
 app.use(express.json());
@@ -28,10 +28,12 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
+    // await client.connect();
 
     const blogCollection = client.db(`ZenZepblog`).collection(`blogs`);
-    const testimonialCollection = client.db(`ZenZepblog`).collection(`testimonial`);
+    const testimonialCollection = client
+      .db(`ZenZepblog`)
+      .collection(`testimonial`);
 
     app.get("/blogss", async (req, res) => {
       const cursor = blogCollection.find();
@@ -39,8 +41,7 @@ async function run() {
       // console.log(result);
       res.send(result);
     });
-    
-    
+
     app.get("/testimonials", async (req, res) => {
       const cursor = testimonialCollection.find();
       const result = await cursor.toArray();
@@ -48,8 +49,15 @@ async function run() {
       res.send(result);
     });
 
+    app.get(`/blogss/:id`, async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await blogCollection.findOne(query);
+      res.send(result);
+    });
+
     // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
+    // await client.db("admin").command({ ping: 1 });
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
     );
