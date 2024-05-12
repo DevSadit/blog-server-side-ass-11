@@ -81,6 +81,29 @@ async function run() {
       res.send(result);
     });
 
+    // 
+      app.get("/top-posts", async (req, res) => {
+        try {
+          // Fetch-all-blogs
+          const blogs = await blogCollection.find({}).toArray();
+
+          // Calculate-word-count-for-each-longDescription
+          blogs.forEach((blog) => {
+            blog.wordCount = blog.longDescription.split(/\s+/).length;
+          });
+
+          // Sortblogs-based-on-word-count-in-descending-order
+          const top10Posts = blogs
+            .sort((a, b) => b.wordCount - a.wordCount)
+            .slice(0, 10);
+
+          res.json(top10Posts);
+        } catch (error) {
+          console.error("Error fetching top posts:", error);
+        }
+      });
+    // 
+
     // sending the blog posts to database
     app.post(`/blogss`, async (req, res) => {
       const newBlog = req.body;
@@ -104,13 +127,12 @@ async function run() {
         $set: {
           category: updatedData.category,
           title: updatedData.title,
-          Spotname: updatedData.Spotname,
           image: updatedData.image,
           shortDescription: updatedData.shortDescription,
           longDescription: updatedData.longDescription,
           authorEmail: updatedData.authorEmail,
           authorImg: updatedData.authorImg,
-          authorName: updatedData.authorName
+          authorName: updatedData.authorName,
         },
       };
       const result = await blogCollection.updateOne(filter, blog, option);
