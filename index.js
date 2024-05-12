@@ -64,7 +64,6 @@ async function run() {
       res.send(result);
     });
 
-
     // getting the specific comment in different posts
     app.get(`/comments/:blogId`, async (req, res) => {
       const blogId = req.params.blogId;
@@ -74,9 +73,37 @@ async function run() {
       res.send(result);
     });
 
+
+
+
+
+
+    // getting the posted blogs match with email
+    app.get(`/blogsss/:authorEmail`, async (req, res) => {
+      const userEmail = req.params.authorEmail;
+      const query = { authorEmail: userEmail };
+      const result = await blogCollection.find(query).toArray();
+      res.send(result);
+    });
+
+
+
+
+
+
+
+
+
+
+    // sending the blog posts to database
+    app.post(`/blogss`, async (req, res) => {
+      const newBlog = req.body;
+      const result = await blogCollection.insertOne(newBlog);
+      res.send(result);
+    });
+    // sending or adding the comments to database
     app.post(`/comments`, async (req, res) => {
       const newComment = req.body;
-      // console.log(newComment);
       const result = await commentCollection.insertOne(newComment);
       res.send(result);
     });
