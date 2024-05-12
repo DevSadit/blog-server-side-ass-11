@@ -73,11 +73,6 @@ async function run() {
       res.send(result);
     });
 
-
-
-
-
-
     // getting the posted blogs match with email
     app.get(`/blogsss/:authorEmail`, async (req, res) => {
       const userEmail = req.params.authorEmail;
@@ -85,15 +80,6 @@ async function run() {
       const result = await blogCollection.find(query).toArray();
       res.send(result);
     });
-
-
-
-
-
-
-
-
-
 
     // sending the blog posts to database
     app.post(`/blogss`, async (req, res) => {
@@ -108,6 +94,28 @@ async function run() {
       res.send(result);
     });
 
+    // updating the blog data
+    app.put(`/blogss/:id`, async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const option = { upsert: true };
+      const updatedData = req.body;
+      const blog = {
+        $set: {
+          category: updatedData.category,
+          title: updatedData.title,
+          Spotname: updatedData.Spotname,
+          image: updatedData.image,
+          shortDescription: updatedData.shortDescription,
+          longDescription: updatedData.longDescription,
+          authorEmail: updatedData.authorEmail,
+          authorImg: updatedData.authorImg,
+          authorName: updatedData.authorName
+        },
+      };
+      const result = await blogCollection.updateOne(filter, blog, option);
+      res.send(result);
+    });
     // Send a ping to confirm a successful connection
     // await client.db("admin").command({ ping: 1 });
     console.log(
