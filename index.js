@@ -32,6 +32,7 @@ async function run() {
 
     const blogCollection = client.db(`ZenZepblog`).collection(`blogs`);
     const commentCollection = client.db(`ZenZepblog`).collection(`comments`);
+    const wishCollection = client.db(`ZenZepblog`).collection(`wishlist`);
     const testimonialCollection = client
       .db(`ZenZepblog`)
       .collection(`testimonial`);
@@ -50,6 +51,23 @@ async function run() {
       res.send(result);
     });
 
+    // getting the wishlist blog posts from database
+    app.get("/wishlist", async (req, res) => {
+      const cursor = wishCollection.find();
+      const result = await cursor.toArray();
+      // console.log(result);
+      res.send(result);
+    });
+
+    // getting the wishlist blogs match with email
+    app.get(`/wishlist/:currentUserEmail`, async (req, res) => {
+      const currentUserEmail = req.params.currentUserEmail;
+      const query = { currentUserEmail: currentUserEmail };
+      const result = await wishCollection.find(query).toArray();
+      res.send(result);
+    });
+
+    // getting blogs with selected id
     app.get(`/blogss/:id`, async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
@@ -81,33 +99,39 @@ async function run() {
       res.send(result);
     });
 
-    // 
-      app.get("/top-posts", async (req, res) => {
-        try {
-          // Fetch-all-blogs
-          const blogs = await blogCollection.find({}).toArray();
+    //
+    app.get("/top-posts", async (req, res) => {
+      try {
+        // Fetch-all-blogs
+        const blogs = await blogCollection.find({}).toArray();
 
-          // Calculate-word-count-for-each-longDescription
-          blogs.forEach((blog) => {
-            blog.wordCount = blog.longDescription.split(/\s+/).length;
-          });
+        // Calculate-word-count-for-each-longDescription
+        blogs.forEach((blog) => {
+          blog.wordCount = blog.longDescription.split(/\s+/).length;
+        });
 
-          // Sortblogs-based-on-word-count-in-descending-order
-          const top10Posts = blogs
-            .sort((a, b) => b.wordCount - a.wordCount)
-            .slice(0, 10);
+        // Sortblogs-based-on-word-count-in-descending-order
+        const top10Posts = blogs
+          .sort((a, b) => b.wordCount - a.wordCount)
+          .slice(0, 10);
 
-          res.json(top10Posts);
-        } catch (error) {
-          console.error("Error fetching top posts:", error);
-        }
-      });
-    // 
+        res.json(top10Posts);
+      } catch (error) {
+        console.error("Error fetching top posts:", error);
+      }
+    });
+    //
 
-    // sending the blog posts to database
+    // sending or adding the blog posts to database
     app.post(`/blogss`, async (req, res) => {
       const newBlog = req.body;
       const result = await blogCollection.insertOne(newBlog);
+      res.send(result);
+    });
+    // sending or adding the wishlist blog posts to database
+    app.post(`/wishlist`, async (req, res) => {
+      const wishBlog = req.body;
+      const result = await wishCollection.insertOne(wishBlog);
       res.send(result);
     });
     // sending or adding the comments to database
