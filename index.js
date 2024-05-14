@@ -9,14 +9,11 @@ const app = express();
 // middleware
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://blog-website-rho-henna.vercel.app",
-    ],
+    origin: ["http://localhost:5173", "https://blog-website-aef2b.web.app"],
   })
 );
 app.use(express.json());
-
+// https://blog-website-aef2b.web.app/
 const uri = `mongodb+srv://${process.env.USER_ID}:${process.env.USER_PASS}@cluster0.irm8dks.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
