@@ -9,7 +9,10 @@ const app = express();
 // middleware
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://blog-website-aef2b.web.app"],
+    origin: [
+      "http://localhost:5173",
+      "https://blog-website-rho-henna.vercel.app",
+    ],
   })
 );
 app.use(express.json());
@@ -142,9 +145,9 @@ async function run() {
     });
 
     // deleting the wish card from database
-    app.delete(`/wishlists/:id`, async (req, res) => {
-      const id = req.params.id;
-      const query = { _id: id };
+    app.delete(`/wishlists/:blogId`, async (req, res) => {
+      const blogId = req.params.blogId;
+      const query = { blogId: blogId };
       // console.log(query);
       const result = await wishCollection.deleteOne(query);
       res.send(result);
