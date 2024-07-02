@@ -4,26 +4,30 @@
 # Fit Flow
 - ## Live Side Url: https://blog-website-aef2b.web.app/
 
-## 🚀 Run this Project in Your Local Machine
+
+## 🚀 Run this to your local machine
 
 Follow these steps to run the project locally on your machine.
 
 ### Prerequisites
 
-Make sure you have Node.js and npm installed on your machine. You can download Node.js from [here](https://nodejs.org/).
+Make sure you have the following installed on your machine:
+- [Node.js](https://nodejs.org/)
+- [MongoDB](https://www.mongodb.com/)
+- [Nodemon](https://nodemon.io/)
 
 ### Installation
 
 1. **Clone the repository:**
 
     ```bash
-    git clone https://github.com/DevSadit/blog-client-side-ass-11.git
+    git clone https://github.com/DevSadit/blog-server-side-ass-11.git
     ```
 
 2. **Navigate to the project directory:**
 
     ```bash
-    cd blog-client-side-ass-11
+    cd fitness-tracker-server-ass-12
     ```
 
 3. **Install dependencies:**
@@ -32,15 +36,28 @@ Make sure you have Node.js and npm installed on your machine. You can download N
     npm install
     ```
 
-4. **Run the development server:**
+4. **Set up environment variables:**
+
+    Create a `.env` file in the root directory and add the following:
+
+    ```env
+    MONGODB_URI=your_mongodb_uri
+    PORT=3000
+    ```
+
+    Replace `your_mongodb_uri` with your actual MongoDB connection string.
+
+5. **Run the development server:**
 
     ```bash
-    npm run dev
+    nodemon index.js
     ```
 
 ### 🎉 You're all set!
 
-Open your browser and navigate to `http://localhost:3000` to see the project in action.
+The server should now be running on `http://localhost:3000`.
+
+
 
 ## Overview
 
