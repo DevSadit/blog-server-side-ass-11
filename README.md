@@ -27,7 +27,7 @@ Make sure you have the following installed on your machine:
 2. **Navigate to the project directory:**
 
     ```bash
-    cd fitness-tracker-server-ass-12
+    cd blog-server-side-ass-11
     ```
 
 3. **Install dependencies:**
@@ -61,14 +61,16 @@ The server should now be running on `http://localhost:3000`.
 
 ## Overview
 
-**Zenzap** is a comprehensive tourism website designed to provide users with detailed information about numerous breathtaking tourist destinations across the globe. Each spot is meticulously categorized by country, making it easy for users to find and explore locations in their preferred region.
+**ZenZap** Website is a vibrant blogging platform designed for users to share their thoughts, experiences, and knowledge on a variety of topics. The site encourages community engagement by allowing users to read, comment on, and create their own blog posts. With a user-friendly interface and robust features, Zainab Website aims to be the go-to destination for both readers and writers.
+
 
 ### Features
 
-- **Extensive Database:** Discover a wide range of tourist spots from all around the world, each with detailed descriptions, images, and key information.
-- **Country-Based Categories:** Easily browse tourist spots categorized by country, simplifying your search for specific destinations.
-- **User Contributions:** Registered users can contribute to the site by adding details about their favorite tourist spots, sharing personal experiences, and enriching our community's travel knowledge.
-- **User Accounts:** To ensure a reliable and secure platform, users must sign up or log in to add new tourist spots or modify existing entries.
+- **User Registration and Login**: New users can sign up and existing users can log in to access the full features of the website.
+- **Blog Creation**: Registered users can create and publish blogs on a wide range of topics.
+- **Blog Exploration**: All visitors can read blogs, discover new ideas, and gain insights from different authors.
+- **User Profiles**: Each user has a profile where their published blogs are showcased.
+- **Commenting System**: Readers can leave comments on blogs to share their thoughts and engage in discussions.
 
 - 
 -  ## NPM Packages which is used in this Project -
